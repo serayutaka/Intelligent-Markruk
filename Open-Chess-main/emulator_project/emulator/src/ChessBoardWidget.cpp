@@ -74,7 +74,7 @@ void ChessBoardWidget::paintEvent(QPaintEvent *event) {
              else p.fillRect(x, y, s, s, QColor(100, 100, 100)); // Dark (Actually green/wood usually)
 
              // Draw LED if active
-             if (ledColors[r][c] != Qt::transparent && ledColors[r][r].alpha() != 0) {
+             if (ledColors[r][c] != Qt::transparent && ledColors[r][c].alpha() != 0) {
                  // Draw halo/ring
                  p.setPen(QPen(ledColors[r][c], 4));
                  p.setBrush(Qt::NoBrush);

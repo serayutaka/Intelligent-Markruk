@@ -20,15 +20,6 @@
 // Game State and Configuration
 // ---------------------------
 
-// Game Mode Definitions
-enum GameMode {
-  MODE_SELECTION = 0,
-  MODE_CHESS_MOVES = 1,
-  MODE_CHESS_BOT = 2,      // Chess vs Bot mode
-  MODE_GAME_3 = 3,         // Reserved for future game mode
-  MODE_SENSOR_TEST = 4
-};
-
 // Global instances
 BoardDriver boardDriver;
 ChessEngine chessEngine;
@@ -40,16 +31,19 @@ ChessBot chessBot(&boardDriver, &chessEngine, BOT_MEDIUM);
 WiFiManager wifiManager;
 #endif
 
-// Current game state
-GameMode currentMode = MODE_SELECTION;
-bool modeInitialized = false;
+// Game Mode Definitions
+enum GameMode {
+  MODE_SELECTION = 0,
+  MODE_CHESS_MOVES = 1,
+  MODE_CHESS_BOT = 2,
+  MODE_GAME_3 = 3,
+  MODE_SENSOR_TEST = 4
+};
 
-// ---------------------------
-// Function Prototypes
-// ---------------------------
-void showGameSelection();
-void handleGameSelection();
-void initializeSelectedMode(GameMode mode);
+// Current game state
+// Force start in Chess Moves mode
+GameMode currentMode = MODE_CHESS_MOVES;
+bool modeInitialized = false;
 
 // ---------------------------
 // SETUP
@@ -127,8 +121,10 @@ void setup() {
   Serial.println("DEBUG: About to show game selection LEDs...");
 
   // Show game selection interface
-  showGameSelection();
+  // showGameSelection();
+  Serial.println("Game Selection Skipped - Direct to Chess Moves");
   
+  /*
   Serial.println("DEBUG: Game selection LEDs should now be visible");
   Serial.println("Four white LEDs should be lit in the center of the board:");
   Serial.println("Position 1 (3,3): Chess Moves (Human vs Human)");
@@ -137,6 +133,7 @@ void setup() {
   Serial.println("Position 4 (4,4): Sensor Test");
   Serial.println();
   Serial.println("Place any chess piece on a white LED to select that mode");
+  */
   Serial.println("================================================");
   Serial.println("         Setup Complete - Entering Main Loop");
   Serial.println("================================================");
@@ -277,8 +274,16 @@ void handleGameSelection() {
   
   // Check for piece placement on selector squares
   if (boardDriver.getSensorState(3, 3)) {
-    // Chess Moves selected
     Serial.println("Chess Moves mode selected!");
+    
+    // Wait for piece removal to avoid interference with board setup
+    boardDriver.setSquareLED(3, 3, 0, 255, 0); // Green to acknowledge
+    boardDriver.showLEDs();
+    while(boardDriver.getSensorState(3, 3)) {
+      boardDriver.readSensors();
+      delay(50);
+    }
+    
     currentMode = MODE_CHESS_MOVES;
     modeInitialized = false;
     boardDriver.clearAllLEDs();
@@ -287,6 +292,15 @@ void handleGameSelection() {
   else if (boardDriver.getSensorState(3, 4)) {
     // Chess Bot selected
     Serial.println("Chess Bot mode selected (Human vs AI)!");
+    
+    // Wait for piece removal
+    boardDriver.setSquareLED(3, 4, 0, 255, 0);
+    boardDriver.showLEDs();
+    while(boardDriver.getSensorState(3, 4)) {
+      boardDriver.readSensors();
+      delay(50);
+    }
+
     currentMode = MODE_CHESS_BOT;
     modeInitialized = false;
     boardDriver.clearAllLEDs();
@@ -295,6 +309,15 @@ void handleGameSelection() {
   else if (boardDriver.getSensorState(4, 3)) {
     // Game Mode 3 selected
     Serial.println("Game Mode 3 selected (Coming Soon)!");
+    
+    // Wait for piece removal
+    boardDriver.setSquareLED(4, 3, 0, 255, 0);
+    boardDriver.showLEDs();
+    while(boardDriver.getSensorState(4, 3)) {
+      boardDriver.readSensors();
+      delay(50);
+    }
+
     currentMode = MODE_GAME_3;
     modeInitialized = false;
     boardDriver.clearAllLEDs();
@@ -303,6 +326,15 @@ void handleGameSelection() {
   else if (boardDriver.getSensorState(4, 4)) {
     // Sensor Test selected
     Serial.println("Sensor Test mode selected!");
+    
+    // Wait for piece removal
+    boardDriver.setSquareLED(4, 4, 0, 255, 0);
+    boardDriver.showLEDs();
+    while(boardDriver.getSensorState(4, 4)) {
+      boardDriver.readSensors();
+      delay(50);
+    }
+
     currentMode = MODE_SENSOR_TEST;
     modeInitialized = false;
     boardDriver.clearAllLEDs();
