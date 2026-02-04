@@ -9,6 +9,23 @@ This emulator allows you to run and debug the OpenChess firmware on your PC with
 - **Qt6** (Core, Widgets, Network)
 - **C++ Compiler** (GCC/Clang/MSVC) supporting C++17
 
+### MacOS Setup (Homebrew)
+On macOS, use [Homebrew](https://brew.sh) to install the required tools:
+
+```bash
+brew install cmake qt@6
+```
+
+**Note**: Qt6 is "keg-only" in Homebrew, meaning it's not linked to your system path by default. You must export the path before running cmake:
+
+```bash
+# For Apple Silicon (M1/M2/etc)
+export CMAKE_PREFIX_PATH="/opt/homebrew/opt/qt@6"
+
+# For Intel Macs
+export CMAKE_PREFIX_PATH="/usr/local/opt/qt@6"
+```
+
 ## Build Instructions
 
 ```bash
