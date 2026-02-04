@@ -33,3 +33,6 @@
 
 # MacOS files
 .DS_Store
+
+# CMake build directory
+Open-Chess-main/emulator_project/build/

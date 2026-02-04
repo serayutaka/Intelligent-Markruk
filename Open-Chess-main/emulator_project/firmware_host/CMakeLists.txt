@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 # Firmware sources are in the parent folder, but we need to compile them here
 # with our mocks.
 
-set(FIRMWARE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../Open-Chess-main)
+set(FIRMWARE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 
 # Source files from the original firmware
 set(FIRMWARE_SOURCES

@@ -546,7 +546,7 @@ void ChessBot::executeBotMove(int fromRow, int fromCol, int toRow, int toCol) {
     if (capturedPiece != ' ') {
         Serial.print("Piece captured: ");
         Serial.println(capturedPiece);
-        _boardDriver->captureAnimation();
+        _boardDriver->captureAnimation(toRow, toCol);
     }
     
     // Flash confirmation on the destination square
@@ -632,7 +632,7 @@ void ChessBot::processPlayerMove(int fromRow, int fromCol, int toRow, int toCol,
     if (capturedPiece != ' ') {
         Serial.print("Captured ");
         Serial.println(capturedPiece);
-        _boardDriver->captureAnimation();
+        _boardDriver->captureAnimation(toRow, toCol);
     }
     
     // Check for pawn promotion

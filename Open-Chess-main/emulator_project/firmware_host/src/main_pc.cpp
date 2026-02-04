@@ -1,5 +1,7 @@
 #include "Arduino.h"
 
+SerialMock Serial;
+
 // Define ENABLE_WIFI to false/undef to force local mode as per OpenChess.ino logic
 #undef ENABLE_WIFI
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "Arduino.h"
 #include <cstdint>
 
 #define NEO_GRB  0

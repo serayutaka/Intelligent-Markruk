@@ -36,6 +36,9 @@ public:
     
     int indexOf(char c) const { return (int)this->find(c); }
     int indexOf(const String& s) const { return (int)this->find(s); }
+    int indexOf(char c, int fromIndex) const { return (int)this->find(c, fromIndex); }
+    int indexOf(const String& s, int fromIndex) const { return (int)this->find(s, fromIndex); }
+    int indexOf(const char* s, int fromIndex) const { return (int)this->find(s, fromIndex); }
     int lastIndexOf(char c) const { return (int)this->rfind(c); }
     char charAt(int index) const { return (*this)[index]; }
     
