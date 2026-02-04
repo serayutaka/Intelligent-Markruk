@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Integration Check",
+    "steps": [
+      {
+        "action": "wait_led",
+        "command": "C",
+        "description": "Wait for initial clear"
+      }
+    ]
+  },
+  {
+    "name": "Piece Lift Test",
+    "steps": [
+      {
+        "action": "sensor",
+        "row": 2,
+        "col": 0,
+        "state": 0,
+        "description": "Lift Pawn at (2,0)"
+      },
+      {
+        "action": "wait_time",
+        "ms": 500
+      },
+      {
+        "action": "expect_log",
+        "text": "Piece lifted",
+        "description": "Check debug output for lift"
+      }
+    ]
+  },
+  {
+    "name": "Invalid Move (Pawn Backward)",
+    "steps": [
+      {
+        "action": "sensor",
+        "row": 2,
+        "col": 0,
+        "state": 0,
+        "description": "Lift Pawn"
+      },
+      {
+        "action": "wait_time",
+        "ms": 200
+      },
+      {
+        "action": "sensor",
+        "row": 1,
+        "col": 0,
+        "state": 1,
+        "description": "Place Pawn backward (invalid)"
+      },
+      {
+         "action": "wait_led",
+         "color_r": 255,
+         "description": "Expect RED led validation error"
+      }
+    ]
+  }
+]
